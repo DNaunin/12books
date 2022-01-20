@@ -1,40 +1,69 @@
 import Head from "next/head";
-import Button from "../components/button/Button";
+import React from 'react';
 import styles from "../styles/Home.module.css";
+import { v4 as uuidv4 } from 'uuid';
+
+const bookList = [
+  {
+    id: 1,
+    name: 'Neverwhere',
+  },
+  {
+    id: 2,
+    name: 'Monstress',
+  },
+];
 
 export default function Home() {
-  function submitPlans() {
-    console.log(document.getElementById("planButton"))
-  }; 
-  function submitDone() {
-    console.log(document.getElementById("finButton"))
-  }; 
+
+  const [list, setList] = React.useState(bookList);
+  const [name, setName] = React.useState('');
+
+  function handleChange(event) {
+    setName(event.target.value);
+  }
+
+  function handleAdd() {
+    const newList = list.concat({ name, id: uuidv4() });
+
+    setList(newList);
+
+    setName('');
+  }
 
   return (
-    <div className={styles.container}>
-      <Head>
+    
+    <div className={styles.main}>
+            <Head>
         <title>12 Books</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <h1>Books to read</h1>
+      <AddItem
+        name={name}
+        onChange={handleChange}
+        onAdd={handleAdd}
+      />
 
-      <main className={styles.main}>
-        <h1>Books I plan to read</h1>
-        <label>Enter your planned books here: </label>
-        <input type="text" id="plannedReads"  placeholder="plan"></input>
-        <button onClick={() => submitPlans()} id="planButton" type="button">Submit</button>
-        <ul>
-          <li>
-            Neil Gaiman - Neverwhere
-          </li>
-          <li>
-            Monstress - Marjorie Liu
-          </li>
-        </ul>
-        <h1>Books I have read</h1>
-        <label>Enter your finished reads here: </label>
-        <input type="text" id="finishedReads" placeholder="done"></input>
-        <button onClick={() => submitDone()} id="finButton" type="button">Submit</button>
-      </main>
+      <List list={list} />
     </div>
   );
-}
+};
+
+const AddItem = ({ name, onChange, onAdd }) => (
+  <div className={styles.container}>
+    <input type="text" value={name} onChange={onChange} />
+    <button type="button" onClick={onAdd}>
+      Add
+    </button>
+  </div>
+);
+
+const List = ({ list }) => (
+  <ul className={styles.list}>
+    {list.map((item) => (
+      <li key={item.id}>{item.name}</li>
+    ))}
+  </ul>
+);
+
