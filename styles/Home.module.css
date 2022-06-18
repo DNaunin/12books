@@ -1,11 +1,18 @@
 .container {
-  text-align: center; 
-  color: white; 
+  text-align: center;
+  color: white;
 }
 
 .main {
   min-height: 100vh;
-  background-image: linear-gradient(to bottom, #224881, #346f9f, #5797b9, #84bfd2, #b7e6ec);
+  background-image: linear-gradient(
+    to bottom,
+    #224881,
+    #346f9f,
+    #5797b9,
+    #84bfd2,
+    #b7e6ec
+  );
   padding: 5rem 0;
   flex: 1;
   display: flex;
@@ -15,6 +22,6 @@
 }
 
 .list {
-  list-style-type: none; 
+  list-style-type: none;
   text-align: center;
 }
